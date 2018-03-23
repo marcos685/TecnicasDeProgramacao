@@ -1,3 +1,5 @@
+import java.util.Arrays;
+import java.util.ArrayList;
 class Teste{
 	public static void main(String[] args) {
 		Conjunto dez = new Conjunto();
@@ -7,18 +9,30 @@ class Teste{
 		Conjunto intersec = new Conjunto();
 		Conjunto uni = new Conjunto();
 		Conjunto dif = new Conjunto();
+		Conjunto cart = new Conjunto();
+		Conjunto pot = new Conjunto();
+		Conjunto misc = new Conjunto();
+		Conjunto vinte = new Conjunto();
+		Conjunto a = new Conjunto();
+		Conjunto b = new Conjunto();
+		Conjunto difPar = new Conjunto();
+		Conjunto difImpar = new Conjunto();
 
 
-		for(int i = 0; i < 10; i++) {
+		for(int i = 0; i < 10; i++){
 			dez.inserir(i);			
 		}
 
-		for(int i = 0; i < 10; i=i+2) {
+		for(int i = 0; i < 10; i=i+2){
 			par.inserir(i);			
 		}
 
-		for(int i = 1; i < 10; i=i+2) {
+		for(int i = 1; i < 10; i=i+2){
 			impar.inserir(i);			
+		}
+
+		for(int i = 0; i < 20; i++){
+			vinte.inserir(i);
 		}
 
 		primos.inserir(1);
@@ -37,6 +51,19 @@ class Teste{
 		intersec = dez.interseccao(par);
 
 		dif = dez.diferenca(par);
+
+		cart = par.prodCartesiano(impar);
+
+		pot = par.conjPotencia();
+
+		misc.inserir(9.9);
+		misc.inserir(true);
+		misc.inserir("olar");
+
+		difPar = vinte.diferenca(par);
+		difImpar = vinte.diferenca(impar);
+		a = vinte.diferenca(uni);
+		b = difImpar.interseccao(difPar);	
 
 
 		if(primos.eSubconjunto(primos)){
@@ -87,11 +114,25 @@ class Teste{
 		}
 
 
-		for(Integer e : dif.vetorLista){
+		for(Object e : dif.lista){
 			System.out.println(e);
 		}
 
 
+		for(Object e : cart.lista){
+			System.out.println(e);
+		}
 
+
+		for(Object e : pot.lista){
+			System.out.println(e);
+		}
+
+		if(a.eSubconjunto(b) /*&& b.eSubconjunto(a)*/){
+			System.out.println("deu morgan");
+		}
+		else{
+			System.out.println("deu ruim")
+		}
 	}
 }
