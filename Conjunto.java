@@ -1,19 +1,23 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 class Conjunto{
-	ArrayList<Integer> vetorLista;
+	List<Object> lista;
+
 
 	Conjunto(){
-		this.vetorLista = new ArrayList<Integer>();
+		this.lista = new ArrayList<Object>();
 	}
 
-	boolean contem(Integer e){
-		return this.vetorLista.contains(e);
+
+	boolean contem(Object e){
+		return this.lista.contains(e);
 	}
+
 
 	boolean eSubconjunto(Conjunto c){
-		for(Integer i : this.vetorLista){
+		for(Object i : this.lista){
 			if(!(c.contem(i))){
 				return false;
 			}
@@ -21,19 +25,21 @@ class Conjunto{
 		return true;
 	}
 
-	void inserir(Integer e){
+
+	void inserir(Object e){
 		if(!(this.contem(e))){
-			this.vetorLista.add(e);
+			this.lista.add(e);
 		}
 	}
+
 
 	Conjunto uniao(Conjunto c){
 		Conjunto u = new Conjunto();
 
-		for(Integer e : this.vetorLista){
+		for(Object e : this.lista){
 			u.inserir(e);
 		}
-		for(Integer e : c.vetorLista){
+		for(Object e : c.lista){
 			if(!(this.contem(e))){
 				u.inserir(e);
 			}
@@ -42,10 +48,11 @@ class Conjunto{
 		return u;
 	}
 
+
 	Conjunto interseccao(Conjunto c){
 		Conjunto i = new Conjunto();
 
-		for(Integer e : this.vetorLista){
+		for(Object e : this.lista){
 			if(c.contem(e)){
 				i.inserir(e);
 			}
@@ -53,6 +60,7 @@ class Conjunto{
 
 		return i;
 	}
+
 
 	Conjunto diferenca(Conjunto c){
 		Conjunto u = new Conjunto();
@@ -62,7 +70,7 @@ class Conjunto{
 		u = this.uniao(c);
 		i = this.interseccao(c);
 
-		for (Integer e : u.vetorLista){
+		for (Object e : u.lista){
 			if(!(i.contem(e))){
 				d.inserir(e);
 			}			
@@ -71,7 +79,51 @@ class Conjunto{
 		return d;
 	}
 
+
 	boolean eVazio(){
-		return this.vetorLista.isEmpty();
+		return this.lista.isEmpty();
+	}
+
+
+	Conjunto prodCartesiano(Conjunto c){
+		Conjunto cart = new Conjunto();
+
+		for(Object e : this.lista){
+			for(Object f : c.lista){
+				
+				List<Object> aux = new ArrayList<Object>();
+				aux.add(e);
+				aux.add(f);
+				cart.inserir(aux);
+			}
+		}
+
+		return cart;
+	}
+
+
+	Conjunto conjPotencia(){
+		Conjunto pot = new Conjunto();
+		List<List<Object>> aux1 = new ArrayList<List<Object>>();
+		aux1.add(new ArrayList<Object>());
+
+		for(Object e : this.lista){
+			List<List<Object>> aux2 = new ArrayList<List<Object>>();
+
+			for(List<Object> subc : aux1){
+				aux2.add(subc);
+
+				List<Object> novoSubc = new ArrayList<Object>(subc);
+				novoSubc.add(e);
+				aux2.add(novoSubc);
+			}
+
+			aux1 = aux2;
+		}
+		
+		for(List<Object> e : aux1){
+			pot.inserir(e);
+		}
+		return pot;
 	}
 }
